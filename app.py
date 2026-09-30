@@ -192,7 +192,6 @@ create_health_table()
 model_path = os.path.join(
     os.path.dirname(__file__),
     "..",
-    "ai_model",
     "thinktrack_model.pkl"
 )
 
