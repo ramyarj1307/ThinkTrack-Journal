@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ThinkTrack AI Insight</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+<header class="navbar">
+
+    <a href="home.html" class="logo">
+        ThinkTrack 🧠
+    </a>
+
+    <nav>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="journal.html">
+            Write Journal
+        </a>
+
+        <a href="planner.html">
+            Daily Planner
+        </a>
+
+        <a href="entries.html">
+            My Entries
+        </a>
+
+        <a href="ai-insight.html" class="active">
+            AI Insight
+        </a>
+
+        <a href="about.html">
+            About
+        </a>
+
+        <button
+            class="logout-button"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </nav>
+
+</header>
+
+
+<main class="ai-page">
+
+    <section class="ai-main-card">
+
+        <div class="ai-page-header">
+
+            <div class="ai-big-icon">
+                🧠
+            </div>
+
+            <div>
+
+                <h1>
+                    ThinkTrack AI Insight
+                </h1>
+
+                <p>
+                    Understand your mood and receive
+                    a personalized recommendation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="ai-mood-box">
+
+            <h2>
+                How are you feeling today?
+            </h2>
+
+            <div class="ai-mood-options">
+
+                <button
+                    type="button"
+                    class="ai-mood-btn"
+                    data-mood="5"
+                    data-name="Happy"
+                >
+                    😊
+                    <span>Happy</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="ai-mood-btn"
+                    data-mood="4"
+                    data-name="Calm"
+                >
+                    😌
+                    <span>Calm</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="ai-mood-btn"
+                    data-mood="6"
+                    data-name="Loved"
+                >
+                    🥰
+                    <span>Loved</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="ai-mood-btn"
+                    data-mood="2"
+                    data-name="Sad"
+                >
+                    😢
+                    <span>Sad</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="ai-mood-btn"
+                    data-mood="1"
+                    data-name="Angry"
+                >
+                    😡
+                    <span>Angry</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="ai-mood-btn"
+                    data-mood="3"
+                    data-name="Tired"
+                >
+                    😴
+                    <span>Tired</span>
+                </button>
+
+            </div>
+
+
+            <p id="selectedMoodText">
+                Select your mood
+            </p>
+
+
+            <button
+                type="button"
+                id="analyzeMoodBtn"
+                class="ai-analyze-btn"
+            >
+                Analyze My Mood ✨
+            </button>
+
+        </div>
+
+
+        <div
+            id="aiResult"
+            class="ai-result"
+            style="display:none;"
+        >
+
+            <div class="ai-result-status">
+
+                <span>
+                    Today's Status
+                </span>
+
+                <h2 id="aiStatus">
+                    --
+                </h2>
+
+            </div>
+
+
+            <div class="ai-recommendation-box">
+
+                <span>
+                    💡
+                </span>
+
+                <div>
+
+                    <strong>
+                        AI Recommendation
+                    </strong>
+
+                    <p id="aiRecommendation">
+                        --
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p
+            id="aiMessage"
+            class="ai-message"
+        ></p>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 ThinkTrack Journal
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

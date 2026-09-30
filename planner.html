@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ThinkTrack - Daily Planner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            background:
+                radial-gradient(circle at 15% 20%, #ffffffaa 2px, transparent 3px),
+                radial-gradient(circle at 80% 60%, #ffffffaa 2px, transparent 3px),
+                linear-gradient(135deg, #eee1ff, #e2efff, #ffe8f2);
+
+            background-size: 90px 90px, 120px 120px, cover;
+            color: #44375d;
+            min-height: 100vh;
+        }
+
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: linear-gradient(
+                90deg,
+                #243f87,
+                #493b91,
+                #653e87
+            );
+
+            box-shadow: 0 4px 15px rgba(50,40,100,0.2);
+        }
+
+        .logo {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #f0a7d7;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #f4b5df;
+        }
+
+        .nav-links .active {
+            color: #f4b5df;
+            font-weight: bold;
+        }
+
+
+        /* PAGE */
+
+        .planner {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto 60px;
+        }
+
+
+        /* HEADER */
+
+        .planner-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .planner-title {
+            font-size: clamp(38px, 6vw, 65px);
+
+            background: linear-gradient(
+                90deg,
+                #c57ab7,
+                #6d9dcc,
+                #a86fbd
+            );
+
+            -webkit-background-clip: text;
+            color: transparent;
+
+            text-shadow: 2px 2px white;
+            letter-spacing: 2px;
+        }
+
+        .planner-date {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+
+        .planner-date input {
+            border: none;
+            border-bottom: 2px solid #76658e;
+            background: transparent;
+            padding: 8px;
+            color: #493b5c;
+            font-size: 15px;
+        }
+
+
+        /* WEATHER */
+
+        .weather-area {
+            margin-bottom: 25px;
+        }
+
+        .weather-area h2 {
+            margin-bottom: 12px;
+            font-size: 23px;
+        }
+
+        .weather-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .weather-btn {
+            width: 58px;
+            height: 58px;
+
+            border-radius: 50%;
+            border: 2px solid white;
+
+            background: linear-gradient(
+                145deg,
+                #ffffff,
+                #dcd6eb
+            );
+
+            font-size: 27px;
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .weather-btn:hover,
+        .weather-btn.selected {
+            transform: scale(1.12);
+            box-shadow: 0 6px 15px rgba(90,70,120,0.25);
+        }
+
+        #weatherResult {
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+
+        /* MAIN GRID */
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+
+        /* CARD */
+
+        .card {
+            padding: 22px;
+            border-radius: 28px;
+
+            border: 2px solid rgba(255,255,255,0.7);
+
+            box-shadow:
+                0 8px 22px rgba(80,70,110,0.14),
+                inset 0 1px 5px rgba(255,255,255,0.8);
+
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 17px;
+        }
+
+
+        /* PRIORITIES */
+
+        .priority-card {
+            background: linear-gradient(
+                135deg,
+                #dff8df,
+                #c8f0df
+            );
+        }
+
+        .planner-input {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .color-box {
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            border: 2px solid white;
+            flex-shrink: 0;
+        }
+
+        .orange {
+            background: #ffd7a8;
+        }
+
+        .light-blue {
+            background: #9bdce9;
+        }
+
+        .lavender {
+            background: #c9a9e8;
+        }
+
+        .pink {
+            background: #f5b9c7;
+        }
+
+        .planner-input input {
+            width: 100%;
+            padding: 12px;
+
+            border: none;
+            outline: none;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,0.85);
+
+            font-size: 15px;
+        }
+
+
+        /* TODO */
+
+        .todo-card {
+            background: linear-gradient(
+                135deg,
+                #d8f1ff,
+                #c9e5f7
+            );
+        }
+
+        .todo-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .todo-row input[type="checkbox"] {
+            width: 27px;
+            height: 27px;
+            accent-color: #9174c7;
+        }
+
+        .todo-row input[type="text"] {
+            width: 100%;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.85);
+        }
+
+        .todo-row input[type="checkbox"]:checked
+        + input {
+            text-decoration: line-through;
+            opacity: 0.55;
+        }
+
+
+        /* THINGS */
+
+        .things-card {
+            background: linear-gradient(
+                135deg,
+                #ffe2df,
+                #f7ced1
+            );
+        }
+
+
+        /* MONEY + COMMENT */
+
+        .lower-left {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .money-card {
+            padding: 20px;
+            border-radius: 25px;
+
+            border: 2px solid rgba(255,255,255,0.7);
+
+            box-shadow: 0 8px 20px rgba(70,60,100,0.12);
+        }
+
+        .money-card h2 {
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .money-in {
+            background: linear-gradient(
+                135deg,
+                #fff1bc,
+                #ffe5a7
+            );
+        }
+
+        .money-out {
+            background: linear-gradient(
+                135deg,
+                #ffd7bd,
+                #ffc6aa
+            );
+        }
+
+        .money-card input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+        }
+
+
+        .comment-card {
+            background: linear-gradient(
+                135deg,
+                #e0d2ff,
+                #cbb9ed
+            );
+            margin-top: 20px;
+        }
+
+        .comment-card textarea {
+            width: 100%;
+            height: 120px;
+
+            resize: none;
+
+            border: none;
+            outline: none;
+
+            border-radius: 15px;
+            padding: 14px;
+
+            background: rgba(255,255,255,0.8);
+
+            font-size: 15px;
+        }
+
+
+        /* SCHEDULE */
+
+        .schedule-card {
+            background: linear-gradient(
+                135deg,
+                #c7edf5,
+                #c6e1f7
+            );
+        }
+
+        .schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .schedule-row {
+            display: grid;
+            grid-template-columns: 70px 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .schedule-row span {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .schedule-row input {
+            width: 100%;
+            border: none;
+            outline: none;
+            border-radius: 11px;
+            padding: 10px;
+            background: rgba(255,255,255,0.86);
+        }
+
+
+        /* BALANCE */
+
+        .balance-card {
+            background: linear-gradient(
+                135deg,
+                #e1ccff,
+                #d6c0f0
+            );
+        }
+
+        .balance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .balance-item {
+            background: rgba(255,255,255,0.42);
+            border-radius: 18px;
+            padding: 14px;
+        }
+
+        .balance-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .balance-title b {
+            font-size: 28px;
+        }
+
+        .balance-item input {
+            width: 100%;
+            margin-top: 10px;
+            accent-color: #8c70c7;
+        }
+
+
+        /* BOTTOM */
+
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+
+        /* WATER */
+
+        .water-card {
+            background: linear-gradient(
+                135deg,
+                #d3f4ff,
+                #c5e7f5
+            );
+        }
+
+        .water-glasses {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .water-btn {
+            border: none;
+            background: transparent;
+            font-size: 35px;
+            cursor: pointer;
+
+            filter: grayscale(1);
+            transition: 0.2s;
+        }
+
+        .water-btn.filled {
+            filter: grayscale(0);
+            transform: translateY(-5px);
+        }
+
+        #waterResult {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+
+        /* MOOD */
+
+        .mood-card {
+            background: linear-gradient(
+                135deg,
+                #fff0b9,
+                #ffe4a5
+            );
+        }
+
+        .moods {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .mood-btn {
+            border: none;
+            background: transparent;
+            font-size: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .mood-btn:hover,
+        .mood-btn.selected {
+            transform: scale(1.25);
+        }
+
+        #moodResult {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+
+        /* SAVE */
+
+        .save-btn {
+            display: block;
+            margin: 30px auto;
+
+            padding: 15px 35px;
+
+            border: none;
+            border-radius: 30px;
+
+            background: linear-gradient(
+                90deg,
+                #9b77c9,
+                #70add0
+            );
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow: 0 7px 18px rgba(80,60,110,0.22);
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        #saveMessage {
+            text-align: center;
+            color: #765a9c;
+            font-weight: bold;
+            margin-top: -18px;
+        }
+
+
+        /* MOBILE */
+
+        @media(max-width: 850px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .planner {
+                width: 95%;
+            }
+
+            .planner-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .main-grid,
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lower-left {
+                grid-template-columns: 1fr;
+            }
+
+            .balance-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .water-glasses {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            ThinkTrack <span>🧠</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="journal.html">Write Journal</a>
+            <a href="entries.html">My Entries</a>
+            <a href="planner.html" class="active">Planner</a>
+            <a href="about.html">About</a>
+        </div>
+
+    </nav>
+
+
+    <main class="planner">
+
+
+        <!-- HEADER -->
+
+        <div class="planner-header">
+
+            <div>
+                <h1 class="planner-title">
+                    DAILY PLANNER
+                </h1>
+
+                <p>
+                    Plan your day and take care of yourself ✨
+                </p>
+            </div>
+
+            <div class="planner-date">
+
+                <label>DATE:</label>
+
+                <input
+                    type="date"
+                    id="plannerDate"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- WEATHER -->
+
+        <section class="weather-area">
+
+            <h2>WEATHER</h2>
+
+            <div class="weather-buttons">
+
+                <button class="weather-btn"
+                    data-weather="Sunny">☀️</button>
+
+                <button class="weather-btn"
+                    data-weather="Windy">💨</button>
+
+                <button class="weather-btn"
+                    data-weather="Cloudy">☁️</button>
+
+                <button class="weather-btn"
+                    data-weather="Rainy">💧</button>
+
+                <button class="weather-btn"
+                    data-weather="Snowy">❄️</button>
+
+            </div>
+
+            <p id="weatherResult">
+                Select today's weather
+            </p>
+
+        </section>
+
+
+        <!-- MAIN -->
+
+        <div class="main-grid">
+
+
+            <!-- LEFT -->
+
+            <div>
+
+
+                <!-- PRIORITIES -->
+
+                <section class="card priority-card">
+
+                    <h2>TOP 3 PRIORITIES</h2>
+
+                    <div class="planner-input">
+
+                        <span class="color-box orange"></span>
+
+                        <input
+                            type="text"
+                            placeholder="First priority..."
+                        >
+                        <input type="checkbox">
+
+                    </div>
+
+
+                    <div class="planner-input">
+
+                        <span class="color-box light-blue"></span>
+
+                        <input
+                            type="text"
+                            placeholder="Second priority..."
+                        >
+                        <input type="checkbox">
+                    </div>
+
+
+                    <div class="planner-input">
+
+                        <span class="color-box lavender"></span>
+
+                        <input
+                            type="text"
+                            placeholder="Third priority..."
+                        >
+                        <input type="checkbox">
+
+                    </div>
+                </section>
+
+
+                <!-- TODO -->
+
+                <section class="card todo-card">
+
+                    <h2>TO-DO LIST</h2>
+
+                    <div class="todo-row">
+                        <input type="checkbox">
+                        <input type="text" placeholder="Task 1">
+                    </div>
+
+                    <div class="todo-row">
+                        <input type="checkbox">
+                        <input type="text" placeholder="Task 2">
+                    </div>
+
+                    <div class="todo-row">
+                        <input type="checkbox">
+                        <input type="text" placeholder="Task 3">
+                    </div>
+
+                    <div class="todo-row">
+                        <input type="checkbox">
+                        <input type="text" placeholder="Task 4">
+                    </div>
+
+                </section>
+
+
+                <!-- THINGS -->
+
+                <section class="card things-card">
+
+                    <h2>THINGS TO GET DONE</h2>
+
+                    <div class="planner-input">
+                        <span class="color-box lavender"></span>
+                        <input type="checkbox">
+                        <input type="text" placeholder="Important thing...">
+                    </div>
+
+                    <div class="planner-input">
+                        <span class="color-box light-blue"></span>
+                        <input type="checkbox">
+                        <input type="text" placeholder="Something to finish...">
+                    </div>
+
+                    <div class="planner-input">
+                        <span class="color-box pink"></span>
+                        <input type="checkbox">
+                        <input type="text" placeholder="One more thing...">
+                    </div>
+
+                </section>
+
+
+                <!-- MONEY -->
+
+                <div class="lower-left">
+
+                    <section class="money-card money-in">
+
+                        <h2>MONEY IN 💵</h2>
+
+                        <input
+                            type="number"
+                            id="moneyIn"
+                            placeholder="₹ 0"
+                        >
+
+                    </section>
+
+
+                    <section class="money-card money-out">
+
+                        <h2>MONEY OUT 💰</h2>
+
+                        <input
+                            type="number"
+                            id="moneyOut"
+                            placeholder="₹ 0"
+                        >
+
+                    </section>
+
+                </div>
+
+
+                <!-- COMMENT -->
+
+                <section class="card comment-card">
+
+                    <h2>COMMENT</h2>
+
+                    <textarea
+                        id="comment"
+                        placeholder="Write something about today..."
+                    ></textarea>
+
+                </section>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <div>
+
+
+                <!-- SCHEDULE -->
+
+                <section class="card schedule-card">
+
+                    <h2>PLANS AND SCHEDULES</h2>
+
+                    <div class="schedule-list">
+
+                        <div class="schedule-row">
+                            <span>6 AM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>7 AM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>8 AM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>9 AM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>10 AM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>11 AM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>12 PM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>1 PM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>2 PM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>3 PM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>4 PM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>5 PM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>6 PM</span>
+                            <input type="text">
+                        </div>
+                        
+                        <div class="schedule-row">
+                            <span>7 PM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>8 PM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>9 PM</span>
+                            <input type="text">
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>10 PM</span>
+                            <input type="text">
+                        </div>
+            
+                </div>            
+                </section>
+
+     <section class="card water-card">
+
+    <h2>WATER TRACKER 💧</h2>
+
+    <div class="water-glasses">
+
+        <button type="button" class="water-btn" data-glass="1">🥛</button>
+        <button type="button" class="water-btn" data-glass="2">🥛</button>
+        <button type="button" class="water-btn" data-glass="3">🥛</button>
+        <button type="button" class="water-btn" data-glass="4">🥛</button>
+        <button type="button" class="water-btn" data-glass="5">🥛</button>
+        <button type="button" class="water-btn" data-glass="6">🥛</button>
+        <button type="button" class="water-btn" data-glass="7">🥛</button>
+        <button type="button" class="water-btn" data-glass="8">🥛</button>
+
+    </div>
+
+    <p id="waterResult">0 / 8 glasses</p>
+
+</section>           
+
+<button type="button" class="save-btn" id="savePlannerBtn">
+    Save Today's Plan 💾
+</button>
+
+<p id="saveMessage"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>

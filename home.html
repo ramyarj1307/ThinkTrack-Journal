@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThinkTrack Journal - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="home.html" class="logo">ThinkTrack 🧠</a>
+
+        <nav>
+            <a href="home.html" class="active">Home</a>
+            <a href="journal.html">Write Journal</a>
+            <a href="planner.html">Daily Planner</a>
+            <a href="entries.html">My Entries</a>
+            <a href="about.html">About</a>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="home-hero">
+            <div class="hero-content">
+                <p class="small-heading">WELCOME TO YOUR SAFE SPACE</p>
+
+                <h1>
+                    Hello, <span id="user_name">Loading</span> 👋
+                </h1>
+
+                <p>
+                    Take a quiet moment to write, reflect, and understand
+                    your thoughts with ThinkTrack Journal.
+                </p>
+
+                <a href="journal.html">
+                    <button class="primary-button">Write Today’s Entry ✍️</button>
+                </a>
+            </div>
+
+            <div class="hero-illustration">
+                <div class="moon">🌙</div>
+                <div class="cloud cloud-one">☁️</div>
+                <div class="cloud cloud-two">☁️</div>
+                <div class="star star-one">✦</div>
+                <div class="star star-two">✦</div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-card">
+                <span>📝</span>
+                <h2 id="totalEntries">0</h2>
+                <p>Total Entries</p>
+            </div>
+
+            <div class="stat-card">
+                <span>📅</span>
+                <h2 id="currentStreak">0</h2>
+                <p>Journal Entries</p>
+            </div>
+
+            <div class="stat-card">
+                <span>💜</span>
+                <h2 id="latestMood">-</h2>
+                <p>Latest Mood</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <!-- THINKTRACK AI INSIGHT -->
+
+<section class="ai-insight-link">
+    <div>
+        <h2>🧠 ThinkTrack AI Insight</h2>
+        <p>Understand your mood and get a personalized recommendation.</p>
+    </div>
+
+    <a href="ai-insight.html">
+        <button class="primary-button">
+            View AI Insight ✨
+        </button>
+    </a>
+</section>
+
+    <footer>
+        <p>© 2026 ThinkTrack Journal</p>
+    </footer>
+</body>
+</html>

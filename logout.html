@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - ThinkTrack Journal</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f5ff;
+            font-family: Arial, sans-serif;
+        }
+
+        .logout-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+
+        .logout-box h1 {
+            color: #5b4b8a;
+            margin-bottom: 10px;
+        }
+
+        .logout-box p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .logout-btn {
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            background: #5b4b8a;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="logout-box">
+        <h1>Logout 👋</h1>
+        <p>Are you sure you want to logout?</p>
+
+        <button type="button" class="logout-btn" id="logoutBtn">
+            Logout
+        </button>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:5000";
+
+        document.getElementById("logoutBtn").addEventListener("click", async function () {
+
+            try {
+                const response = await fetch(`${API_URL}/logout`, {
+                    method: "POST",
+                    credentials: "include"
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = "login.html";
+                } else {
+                    alert(data.message || "Logout failed");
+                }
+
+            } catch (error) {
+                console.error("Logout error:", error);
+                alert("Unable to connect to the server.");
+            }
+        });
+    </script>
+
+</body>
+</html>

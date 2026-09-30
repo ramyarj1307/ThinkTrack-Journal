@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThinkTrack Journal - Entries</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="home.html" class="logo">ThinkTrack 🧠</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="journal.html">Write Journal</a>
+            <a href="entries.html" class="active">My Entries</a>
+            <a href="about.html">About</a>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </nav>
+    </header>
+
+    <main class="page-container">
+        <section class="page-heading">
+            <p class="small-heading">YOUR REFLECTIONS</p>
+            <h1>My Journal Entries 📖</h1>
+            <p>Look back at your thoughts and emotions.</p>
+        </section>
+
+        <section class="filter-area">
+            <input
+                type="search"
+                id="searchEntries"
+                placeholder="Search your entries..."
+            >
+
+            <select id="filterMood">
+                <option value="all">All Moods</option>
+                <option value="😊 Happy">😊 Happy</option>
+                <option value="😌 Calm">😌 Calm</option>
+                <option value="🥰 Loved">🥰 Loved</option>
+                <option value="😢 Sad">😢 Sad</option>
+                <option value="😡 Angry">😡 Angry</option>
+                <option value="😴 Tired">😴 Tired</option>
+            </select>
+        </section>
+
+        <section id="entryList" class="entry-grid"></section>
+    </main>
+
+    <footer>
+        <p>© 2026 ThinkTrack Journal</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThinkTrack Journal - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-body">
+
+    <div class="floating-shape shape-one"></div>
+    <div class="floating-shape shape-two"></div>
+    <div class="floating-shape shape-three"></div>
+
+    <main class="login-wrapper">
+        <section class="login-card">
+
+            <div class="brand-icon">🧠</div>
+
+            <h1>ThinkTrack Journal</h1>
+
+            <p class="tagline">
+                Write your thoughts. Understand yourself.
+            </p>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+
+                <label for="email">Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <!-- Forgot Password -->
+                <div class="forgot-container">
+                    <a href="forgot-password.html">
+                        Forgot Password?
+                    </a>
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="primary-button">
+                    Login ✨
+                </button>
+
+                <p id="loginMessage"></p>
+
+            </form>
+
+            <!-- Divider -->
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <!-- Google Login -->
+            <button type="button" class="google-button" id="googleLogin">
+                <span>G</span>
+                Continue with Google
+            </button>
+
+            <!-- Register -->
+            <p class="register-text">
+                Don't have an account?
+                <a href="register.html">Create Account</a>
+            </p>
+
+            <p class="login-note">
+                Your private space for daily thoughts and emotions.
+            </p>
+
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

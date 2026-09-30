@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThinkTrack Journal - Write</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="home.html" class="logo">ThinkTrack 🧠</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="journal.html" class="active">Write Journal</a>
+            <a href="planner.html">Daily Planner</a>
+            <a href="entries.html">My Entries</a>
+            <a href="about.html">About</a>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </nav>
+    </header>
+
+    <main class="page-container">
+        <section class="page-heading">
+            <p class="small-heading">DAILY REFLECTION</p>
+            <h1>How are you feeling today? 🌷</h1>
+            <p>Write honestly. This is your private space.</p>
+        </section>
+
+        <section class="journal-form-card">
+            <form id="journalForm">
+
+                <label for="entryDate">Choose Date 📅</label>
+
+                <input
+                    type="date"
+                    id="entryDate"
+                    required
+                >
+
+                <label for="entryTitle">Journal Title</label>
+
+                <input
+                    type="text"
+                    id="entryTitle"
+                    placeholder="Example: A peaceful day"
+                    required
+                >
+
+                <label>Choose Your Mood</label>
+
+                <div class="mood-options">
+                    <label class="mood-option">
+                        <input type="radio" name="mood" value="😊 Happy" required>
+                        <span>😊<small>Happy</small></span>
+                    </label>
+
+                    <label class="mood-option">
+                        <input type="radio" name="mood" value="😌 Calm">
+                        <span>😌<small>Calm</small></span>
+                    </label>
+
+                    <label class="mood-option">
+                        <input type="radio" name="mood" value="🥰 Loved">
+                        <span>🥰<small>Loved</small></span>
+                    </label>
+
+                    <label class="mood-option">
+                        <input type="radio" name="mood" value="😢 Sad">
+                        <span>😢<small>Sad</small></span>
+                    </label>
+
+                    <label class="mood-option">
+                        <input type="radio" name="mood" value="😡 Angry">
+                        <span>😡<small>Angry</small></span>
+                    </label>
+
+                    <label class="mood-option">
+                        <input type="radio" name="mood" value="😴 Tired">
+                        <span>😴<small>Tired</small></span>
+                    </label>
+                </div>
+
+                <label for="entryText">Write Your Thoughts</label>
+
+                <textarea
+                    id="entryText"
+                    placeholder="What happened today? How did you feel?"
+                    required
+                ></textarea>
+
+                <button type="submit" class="primary-button">
+                    Save Today's Entry 💾
+                </button>
+
+                <p id="journalMessage"></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 ThinkTrack Journal</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
